@@ -1,0 +1,109 @@
+var petListImages = ["https://github.com/bcorpplayzreal/createtaskcat/blob/main/catimage.png?raw=true", "https://github.com/bcorpplayzreal/createtaskcat/blob/main/dogimage.png?raw=true", "https://github.com/bcorpplayzreal/createtaskcat/blob/main/hamsterimage.png?raw=true"];
+var hatImageList = ["https://github.com/bcorpplayzreal/createtaskcat/blob/main/chefhatv3.png?raw=true", "https://github.com/bcorpplayzreal/createtaskcat/blob/main/cophatv2.png?raw=true", "https://github.com/bcorpplayzreal/createtaskcat/blob/main/crownv2.png?raw=true", "https://github.com/bcorpplayzreal/createtaskcat/blob/main/greycowboyv2.png?raw=true", "https://github.com/bcorpplayzreal/createtaskcat/blob/main/nursev2.png?raw=true", "https://github.com/bcorpplayzreal/createtaskcat/blob/main/partyv3.png?raw=true", "https://github.com/bcorpplayzreal/createtaskcat/blob/main/sunhatv2.png?raw=true", "https://github.com/bcorpplayzreal/createtaskcat/blob/main/vikingv2.png?raw=true"];
+var hatStyles = ["Service", "Service", "Crown", "Cowboy", "Service", "Party", "Sunhat", "Viking"];
+var finalOptions = [];
+//var userStyle = "Cowboy";
+var userPet = "https://github.com/bcorpplayzreal/createtaskcat/blob/main/catimage.png?raw=true";
+//updating Variables
+onEvent("styleDropdown", "change", function( ) {
+  var userStyle;
+  userStyle = getText("styleDropdown");
+  filter(userStyle);
+});
+
+//Next and Back buttons
+onEvent("HomeScreenNext", "click", function( ) {
+  setScreen("petPicker");
+  setImageURL("petImage", "https://github.com/bcorpplayzreal/createtaskcat/blob/main/catimage.png?raw=true");
+});
+onEvent("petPickerBack", "click", function( ) {
+  setScreen("homeScreen");
+});
+onEvent("petPickerNext", "click", function( ) {
+  setScreen("hatRequirements");
+});
+onEvent("hatRequirementsBack", "click", function( ) {
+  setScreen("petPicker");
+});
+onEvent("hatRequirementsNext", "click", function( ) {
+  setScreen("finalOptions");
+    updateFinalScreen();
+});
+onEvent("finalOptionsBack", "click", function( ) {
+  setScreen("hatRequirements");
+  finalOptions=[];
+  index1=0;
+});
+
+//Pet picking slideshow 
+var index=0;
+onEvent("petPickerLeft", "click", function( ) {
+  console.log(index);
+  if (index==0) {
+    index=petListImages.length-1;
+  }
+  else {
+    index=(index-1);
+  }
+  updatePetScreen();
+});
+
+onEvent("petPickerRight", "click", function( ) {
+  if (index==petListImages.length-1) {
+    index=0;
+  } else {
+    index++;
+  }
+  updatePetScreen();
+});
+
+//Final Options Slideshow
+var index1 = 0;
+onEvent("FinalOptionsLeft", "click", function( ) {
+      console.log(index1 + " 60");
+ if (index1 == 0 ) {
+    index1=finalOptions.length-1;
+    console.log(finalOptions.length);
+    console.log(index1 + " 63");
+  } else {
+    index1=(index1-1);
+    console.log(index1 + " 67");
+  }
+  updateFinalScreen();
+
+});
+
+onEvent("finalOptionsRight", "click", function( ) {
+  if (index1==finalOptions.length-1) {
+    index1=0;
+  } else {
+    index1 = (index1+1);
+  }
+  updateFinalScreen();
+});
+
+
+//updatePetScreen
+function updatePetScreen(){
+  setImageURL("petImage", petListImages[index]);
+  userPet = petListImages[index];
+}
+//updateFinalScreen
+function updateFinalScreen(){
+  setImageURL("finalPetImage", userPet);
+  console.log(index+" ");
+    console.log(index1+" one");
+  setImageURL("finalHat", finalOptions[index1]);
+  console.log(index1+" one");
+  console.log(index+" ");
+}
+//filter
+function filter(styleParameter){
+for (var i = 0; i < hatImageList.length; i++) {
+  if (styleParameter == hatStyles[i]) {
+    console.log(hatImageList[i]);
+  appendItem(finalOptions, hatImageList[i]);
+  }
+}
+
+}
